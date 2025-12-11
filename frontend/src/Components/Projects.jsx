@@ -577,7 +577,7 @@ const Projects = () => {
                 ))}
               </div>
             </motion.div>
-          </div>
+          </div> 
 
           {/* Bottom Divider */}
           <div style={{
