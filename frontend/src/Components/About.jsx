@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 const About = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isTablet, setIsTablet] = useState(window.innerWidth >= 768 && window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   // Animation variants
   const fadeInUp = {
     hidden: { opacity: 0, y: 60 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
@@ -17,7 +29,7 @@ const About = () => {
     visible: { 
       opacity: 1, 
       x: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
@@ -26,7 +38,7 @@ const About = () => {
     visible: { 
       opacity: 1, 
       x: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
@@ -35,7 +47,7 @@ const About = () => {
     visible: { 
       opacity: 1, 
       scale: 1,
-      transition: { duration: 0.5, ease: "easeOut" }
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
@@ -44,7 +56,8 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2
+        staggerChildren: 0.15,
+        delayChildren: 0.1
       }
     }
   };
@@ -54,11 +67,12 @@ const About = () => {
       id="about"
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       style={{
         position: "relative",
-        minHeight: "100vh",
-        padding: "5rem 10%",
+        minHeight: "auto",
+        padding: isMobile ? "3rem 1rem" : isTablet ? "4rem 2rem" : "5rem 10%",
         backgroundColor: "#f8f9fa",
         zIndex: 1
       }}
@@ -75,7 +89,7 @@ const About = () => {
           <motion.h2 
             variants={fadeInUp}
             style={{
-              fontSize: "2.5rem",
+              fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
               fontWeight: "bold",
               textAlign: "center",
               marginBottom: "1rem",
@@ -101,22 +115,23 @@ const About = () => {
           
           <div style={{
             display: "flex",
-            gap: "3rem",
+            flexDirection: isMobile ? "column" : "row",
+            gap: isMobile ? "2rem" : "3rem",
             alignItems: "center",
             flexWrap: "wrap"
           }}>
             {/* Left side - Paragraph */}
             <motion.div 
               variants={fadeInLeft}
-              style={{ flex: "1 1 400px" }}
+              style={{ flex: isMobile ? "1 1 100%" : "1 1 400px", width: isMobile ? "100%" : "auto" }}
             >
               <p style={{
-                fontSize: "1.1rem",
+                fontSize: isMobile ? "0.95rem" : "1.1rem",
                 lineHeight: "1.8",
                 color: "#555",
                 fontFamily: "sans-serif",
-                textIndent: "2rem",
-                textAlign: "justify"
+                textIndent: isMobile ? "0" : "2rem",
+                textAlign: isMobile ? "left" : "justify"
               }}>
               With a background in Computer Science and a passion for full-stack and AI-driven development, I build products that put users first. I thrive on understanding customer challenges and turning them into efficient, scalable software solutions. Whether designing databases, building APIs, or crafting intuitive interfaces, I approach every project with a commitment to solving real customer problems and delivering results that matter.
               </p>
@@ -126,14 +141,16 @@ const About = () => {
             <motion.div 
               variants={staggerContainer}
               style={{
-                flex: "1 1 300px",
+                flex: isMobile ? "1 1 100%" : "1 1 300px",
+                width: isMobile ? "100%" : "auto",
                 display: "flex",
-                gap: "2rem",
+                gap: isMobile ? "1.5rem" : "2rem",
                 justifyContent: "center",
                 backgroundColor: "#ffffff",
-                padding: "2.5rem 2rem",
+                padding: isMobile ? "2rem 1.5rem" : "2.5rem 2rem",
                 borderRadius: "12px",
-                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3)"
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.3)",
+                flexWrap: isMobile ? "wrap" : "nowrap"
               }}
             >
               <motion.div 
@@ -141,7 +158,7 @@ const About = () => {
                 style={{ textAlign: "center" }}
               >
                 <h3 style={{
-                  fontSize: "2.5rem",
+                  fontSize: isMobile ? "2rem" : "2.5rem",
                   fontWeight: "bold",
                   color: "#000000",
                   marginBottom: "0.5rem",
@@ -198,11 +215,12 @@ const About = () => {
           id="education"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: true, amount: 0.3 }}
           variants={fadeInUp}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <h2 style={{
-            fontSize: "2.5rem",
+            fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
             fontWeight: "bold",
             marginBottom: "2rem",
             color: "#333",
@@ -228,7 +246,7 @@ const About = () => {
               borderRadius: "50%"
             }}></div>
             <h3 style={{
-              fontSize: "1.8rem",
+              fontSize: isMobile ? "1.4rem" : isTablet ? "1.6rem" : "1.8rem",
               fontWeight: "bold",
               marginBottom: "0.5rem",
               color: "#000000",
@@ -237,7 +255,7 @@ const About = () => {
               Bachelor of Computer Science
             </h3>
             <p style={{
-              fontSize: "1.2rem",
+              fontSize: isMobile ? "1rem" : "1.2rem",
               color: "#666",
               marginBottom: "1.5rem",
               fontFamily: "sans-serif",
@@ -247,7 +265,7 @@ const About = () => {
               Government College University, Faisalabad
             </p>
             <p style={{
-              fontSize: "1rem",
+              fontSize: isMobile ? "0.9rem" : "1rem",
               color: "#555",
               lineHeight: "1.8",
               fontFamily: "sans-serif"

@@ -1,63 +1,89 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import iqraImage from '../assets/iqra1.jpg'
 import fallbackImage from '../assets/main.jpg'
 import cvFile from '../assets/cv.pdf'
+// Import PNG icons from assets folder
+import htmlIcon from '../assets/html.png'
+import cssIcon from '../assets/css.png'
+import jsIcon from '../assets/javascript.png'
+import reactIcon from '../assets/react.png'
+import tailwindIcon from '../assets/tailwind.png'
+import nodeIcon from '../assets/nodejs.png'
+import expressIcon from '../assets/express.png'
+import mongodbIcon from '../assets/mongodb.png'
+import firebaseIcon from '../assets/firebase.png'
+import aiIcon from '../assets/ai.png'
+import githubIcon from '../assets/github.png'
+import postmanIcon from '../assets/postman.png'
 import About from './About'
 import Services from './Services'
 import Projects from './Projects'
 import Contact from './Contact'
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"
 
 
 const Home = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isTablet, setIsTablet] = useState(window.innerWidth >= 768 && window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
     const skills = [
     {
       name: "HTML",
-      icon: "🌐"
+      icon: htmlIcon
     },
     {
       name: "CSS",
-      icon: "🎨"
+      icon: cssIcon
     },
     {
       name: "JavaScript",
-      icon: "⚡"
+      icon: jsIcon
     },
     {
       name: "React.js",
-      icon: "⚛️"
+      icon: reactIcon
     },
     {
       name: "Tailwind CSS",
-      icon: "💨"
+      icon: tailwindIcon
     },
     {
       name: "Node.js",
-      icon: "💚"
+      icon: nodeIcon
     },
     {
       name: "Express.js",
-      icon: "🚂"
+      icon: expressIcon
     },
     {
       name: "MongoDB",
-      icon: "🍃"
+      icon: mongodbIcon
     },
     {
       name: "Firebase",
-      icon: "🔥"
+      icon: firebaseIcon
     },
-       {
+    {
       name: "AI Tools",
-      icon: "🤖"
+      icon: aiIcon
     },
     {
       name: "Git & GitHub",
-      icon: "🔀"
+      icon: githubIcon
     },
     {
       name: "Postman",
-      icon: "📮"
+      icon: postmanIcon
     }
   ];
 
@@ -67,7 +93,7 @@ const Home = () => {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
@@ -75,7 +101,7 @@ const Home = () => {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
-      transition: { duration: 0.8 }
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
@@ -84,7 +110,8 @@ const Home = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        delayChildren: 0.1
       }
     }
   };
@@ -94,25 +121,34 @@ const Home = () => {
     visible: { 
       opacity: 1, 
       scale: 1,
-      transition: { duration: 0.5 }
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
   return (
     <div>
       {/* Hero Section */}
-      <div style={{
-        position: "relative",
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-end",
-        paddingRight: 0,
-        zIndex: 1,
-        backgroundImage: `url(${fallbackImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center"
-      }}>
+      <motion.section
+        id="home"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={fadeIn}
+        style={{
+          position: "relative",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: isMobile ? "column" : "row",
+          alignItems: isMobile ? "center" : "center",
+          justifyContent: isMobile ? "center" : "flex-end",
+          padding: isMobile ? "2rem 1rem" : isTablet ? "2rem 2rem" : "0",
+          paddingRight: 0,
+          zIndex: 1,
+          backgroundImage: `url(${fallbackImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }}
+      >
         <video
           src="/video/background.mp4"
           autoPlay
@@ -137,18 +173,22 @@ const Home = () => {
           animate="visible"
           variants={fadeInUp}
           style={{
-            position: "absolute",
-            top: "50%",
-            left: "10%",
-            transform: "translateY(-50%)",
+            position: isMobile ? "relative" : "absolute",
+            top: isMobile ? "auto" : "50%",
+            left: isMobile ? "auto" : "10%",
+            transform: isMobile ? "none" : "translateY(-50%)",
             zIndex: 1,
-            color: "white"
+            color: "white",
+            textAlign: isMobile ? "center" : "left",
+            width: isMobile ? "100%" : "auto",
+            padding: isMobile ? "2rem 1rem" : "0",
+            marginTop: isMobile ? "4rem" : "0"
           }}
         >
           <motion.h1 
             variants={fadeInUp}
             style={{
-              fontSize: "2.5rem",
+              fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
               fontWeight: "bold",
               lineHeight: "1.2",
               margin: 0,
@@ -162,7 +202,7 @@ const Home = () => {
           <motion.h2 
             variants={fadeInUp}
             style={{
-              fontSize: "1.5rem",
+              fontSize: isMobile ? "1.1rem" : isTablet ? "1.3rem" : "1.5rem",
               fontWeight: "bold",
               lineHeight: "1.2",
               margin: 0,
@@ -177,14 +217,17 @@ const Home = () => {
             variants={fadeInUp}
             style={{
               display: "flex",
+              flexDirection: isMobile ? "column" : "row",
               gap: "1rem",
-              alignItems: "center"
+              alignItems: "center",
+              justifyContent: isMobile ? "center" : "flex-start",
+              width: isMobile ? "100%" : "auto"
             }}
           >
             <button
               style={{
-                padding: "0.75rem 1.5rem",
-                fontSize: "1rem",
+                padding: isMobile ? "0.65rem 1.2rem" : "0.75rem 1.5rem",
+                fontSize: isMobile ? "0.9rem" : "1rem",
                 fontWeight: "600",
                 color: "#ffffff",
                 backgroundColor: "transparent",
@@ -192,7 +235,9 @@ const Home = () => {
                 borderRadius: "50px",
                 cursor: "pointer",
                 fontFamily: "sans-serif",
-                transition: "all 0.3s ease"
+                transition: "all 0.3s ease",
+                width: isMobile ? "100%" : "auto",
+                maxWidth: isMobile ? "250px" : "none"
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = "#ffffff";
@@ -203,7 +248,7 @@ const Home = () => {
                 e.currentTarget.style.color = "#ffffff";
               }}
               onClick={() => {
-                const contactSection = document.getElementById('contact');
+                const contactSection = document.getElementById('contact-heading');
                 if (contactSection) {
                   contactSection.scrollIntoView({ behavior: 'smooth' });
                 }
@@ -213,8 +258,8 @@ const Home = () => {
             </button>
             <button
               style={{
-                padding: "0.75rem 1.2rem",
-                fontSize: "1rem",
+                padding: isMobile ? "0.65rem 1.2rem" : "0.75rem 1.2rem",
+                fontSize: isMobile ? "0.9rem" : "1rem",
                 fontWeight: "600",
                 color: "#ffffff",
                 backgroundColor: "transparent",
@@ -222,7 +267,9 @@ const Home = () => {
                 borderRadius: "50px",
                 cursor: "pointer",
                 fontFamily: "sans-serif",
-                transition: "all 0.3s ease"
+                transition: "all 0.3s ease",
+                width: isMobile ? "100%" : "auto",
+                maxWidth: isMobile ? "250px" : "none"
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = "#ffffff";
@@ -247,34 +294,37 @@ const Home = () => {
         </motion.div>
         
         <motion.img 
-          initial={{ opacity: 0, x: 100 }}
+          initial={{ opacity: 0, x: isMobile ? 0 : 100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           src={iqraImage} 
           alt="Iqra" 
           style={{
-            maxWidth: "40%",
+            maxWidth: isMobile ? "70%" : isTablet ? "45%" : "40%",
             height: "auto",
             objectFit: "contain",
             position: "relative",
-            zIndex: 1
+            zIndex: 1,
+            marginTop: isMobile ? "2rem" : "0",
+            order: isMobile ? -1 : 0
           }}
         />
-      </div>
+      </motion.section>
       
       <About />
 
       {/* Skills Section */}
       <motion.section 
-        id="services"
+        id="skills"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, amount: 0.2 }}
         variants={fadeIn}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: "relative",
           minHeight: "auto",
-          padding: "2rem 10%",
+          padding: isMobile ? "2rem 1rem" : isTablet ? "2rem 2rem" : "2rem 10%",
           backgroundColor: "#ffffff",
           zIndex: 1
         }}
@@ -285,7 +335,7 @@ const Home = () => {
           style={{ textAlign: "center", marginBottom: "1.5rem" }}
         >
           <h2 style={{
-            fontSize: "2rem",
+            fontSize: isMobile ? "1.5rem" : isTablet ? "1.75rem" : "2rem",
             fontWeight: "bold",
             color: "#000000",
             fontFamily: "sans-serif",
@@ -311,13 +361,13 @@ const Home = () => {
           <div style={{ marginBottom: "2rem" }}></div>
         </motion.div>
 
-        {/* Skills Grid - 6 per row */}
+        {/* Skills Grid - Responsive */}
         <motion.div 
           variants={staggerContainer}
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(6, 1fr)",
-            gap: "1.2rem 0.8rem",
+            gridTemplateColumns: isMobile ? "repeat(3, 1fr)" : isTablet ? "repeat(4, 1fr)" : "repeat(6, 1fr)",
+            gap: isMobile ? "1rem 0.5rem" : "1.2rem 0.8rem",
             maxWidth: "1000px",
             margin: "0 auto"
           }}
@@ -341,24 +391,32 @@ const Home = () => {
             >
               {/* Icon Circle */}
               <div style={{
-                width: "55px",
-                height: "55px",
+                width: isMobile ? "45px" : "55px",
+                height: isMobile ? "45px" : "55px",
                 backgroundColor: "#ffffff",
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 margin: "0 auto 0.5rem",
-                fontSize: "1.5rem",
                 border: "2px solid #000000",
-                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)"
+                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+                overflow: "hidden"
               }}>
-                {skill.icon}
+                <img 
+                  src={skill.icon} 
+                  alt={skill.name}
+                  style={{
+                    width: isMobile ? "28px" : "35px",
+                    height: isMobile ? "28px" : "35px",
+                    objectFit: "contain"
+                  }}
+                />
               </div>
 
               {/* Skill Name */}
               <h3 style={{
-                fontSize: "0.85rem",
+                fontSize: isMobile ? "0.7rem" : "0.85rem",
                 fontWeight: "bold",
                 color: "#000000",
                 marginBottom: "0",
@@ -375,15 +433,16 @@ const Home = () => {
 
       {/* Experience Section */}
       <motion.section 
-        id="projects"
+        id="experience"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
         variants={fadeIn}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: "relative",
-          minHeight: "100vh",
-          padding: "5rem 10%",
+          minHeight: "auto",
+          padding: isMobile ? "3rem 1rem" : isTablet ? "4rem 2rem" : "5rem 10%",
           backgroundColor: "#ffffff",
           zIndex: 1
         }}
@@ -391,7 +450,7 @@ const Home = () => {
         <motion.h2 
           variants={fadeInUp}
           style={{
-            fontSize: "2.5rem",
+            fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
             fontWeight: "bold",
             marginBottom: "1rem",
             color: "#333",
@@ -420,13 +479,14 @@ const Home = () => {
         <motion.h2 
           variants={fadeInUp}
           style={{
-            fontSize: "2.5rem",
+            fontSize: isMobile ? "1.5rem" : isTablet ? "1.8rem" : "2.5rem",
             fontWeight: "300",
-            marginBottom: "4rem",
+            marginBottom: isMobile ? "2rem" : "4rem",
             color: "#1a1a1a",
             fontFamily: "'Georgia', serif",
             textAlign: "center",
-            letterSpacing: "0.5px"
+            letterSpacing: "0.5px",
+            lineHeight: "1.4"
           }}
         >
           My path in creating digital solutions.
@@ -441,24 +501,27 @@ const Home = () => {
             variants={fadeInUp}
             style={{
               display: "flex",
+              flexDirection: isMobile ? "column" : "row",
               marginBottom: "3rem",
-              gap: "3rem",
+              gap: isMobile ? "1rem" : "3rem",
               position: "relative"
             }}
           >
             <div style={{
-              minWidth: "120px",
+              minWidth: isMobile ? "auto" : "120px",
               paddingTop: "0.25rem",
               position: "relative",
               display: "flex",
-              justifyContent: "center"
+              justifyContent: "center",
+              width: isMobile ? "100%" : "auto"
             }}>
               <div style={{ position: "relative" }}>
                 <p style={{
-                  fontSize: "1rem",
+                  fontSize: isMobile ? "0.9rem" : "1rem",
                   color: "#333",
                   fontFamily: "'Arial', sans-serif",
-                  fontWeight: "600"
+                  fontWeight: "600",
+                  textAlign: isMobile ? "left" : "center"
                 }}>
                   2025
                 </p>
@@ -476,7 +539,7 @@ const Home = () => {
             </div>
             <div style={{ flex: 1 }}>
               <h3 style={{
-                fontSize: "1.25rem",
+                fontSize: isMobile ? "1.1rem" : "1.25rem",
                 fontWeight: "600",
                 marginBottom: "0.5rem",
                 color: "#1a1a1a",
@@ -485,12 +548,12 @@ const Home = () => {
                 MERN Stack Developer at Site Native
               </h3>
               <p style={{
-                fontSize: "0.95rem",
+                fontSize: isMobile ? "0.85rem" : "0.95rem",
                 color: "#666",
                 lineHeight: "1.8",
                 fontFamily: "'Arial', sans-serif",
                 marginBottom: "1rem",
-                textAlign: "justify"
+                textAlign: isMobile ? "left" : "justify"
               }}>
                 At Site Native, I delivered 6+ full-stack projects with 98% client satisfaction. I built scalable SaaS products with AI integrations, improving workflow efficiency by 40%. I developed responsive applications using React, Node.js, Express.js, and MongoDB, increasing user engagement by 25%. I ensured 99% cross-device compatibility with thorough testing, reducing post-launch issues by 15%.
               </p>
@@ -502,24 +565,27 @@ const Home = () => {
             variants={fadeInUp}
             style={{
               display: "flex",
+              flexDirection: isMobile ? "column" : "row",
               marginBottom: "3rem",
-              gap: "3rem",
+              gap: isMobile ? "1rem" : "3rem",
               position: "relative"
             }}
           >
             <div style={{
-              minWidth: "120px",
+              minWidth: isMobile ? "auto" : "120px",
               paddingTop: "0.25rem",
               position: "relative",
               display: "flex",
-              justifyContent: "center"
+              justifyContent: "center",
+              width: isMobile ? "100%" : "auto"
             }}>
               <div style={{ position: "relative" }}>
                 <p style={{
-                  fontSize: "1rem",
+                  fontSize: isMobile ? "0.9rem" : "1rem",
                   color: "#333",
                   fontFamily: "'Arial', sans-serif",
-                  fontWeight: "600"
+                  fontWeight: "600",
+                  textAlign: isMobile ? "left" : "center"
                 }}>
                   2023 - 2024
                 </p>
@@ -537,7 +603,7 @@ const Home = () => {
             </div>
             <div style={{ flex: 1 }}>
               <h3 style={{
-                fontSize: "1.25rem",
+                fontSize: isMobile ? "1.1rem" : "1.25rem",
                 fontWeight: "600",
                 marginBottom: "0.5rem",
                 color: "#1a1a1a",
@@ -546,12 +612,12 @@ const Home = () => {
                 Assistant Manager – Processing at Aims Technologies
               </h3>
               <p style={{
-                fontSize: "0.95rem",
+                fontSize: isMobile ? "0.85rem" : "0.95rem",
                 color: "#666",
                 lineHeight: "1.8",
                 fontFamily: "'Arial', sans-serif",
                 marginBottom: "1rem",
-                textAlign: "justify"
+                textAlign: isMobile ? "left" : "justify"
               }}>
                 As an Assistant Manager at Aims Technologies Pvt. Ltd, I maintained 98% client satisfaction and strengthened retention through effective communication. I analyzed sales data to guide strategy, contributing to 15% revenue growth. I built strong supplier partnerships, ensuring 100% on-time delivery, and improved operational efficiency by 20% through streamlined processes. I collaborated across teams to help increase the customer base by 10%.
               </p>
@@ -563,30 +629,33 @@ const Home = () => {
             variants={fadeInUp}
             style={{
               display: "flex",
+              flexDirection: isMobile ? "column" : "row",
               marginBottom: "3rem",
-              gap: "3rem",
+              gap: isMobile ? "1rem" : "3rem",
               position: "relative"
             }}
           >
             <div style={{
-              minWidth: "120px",
+              minWidth: isMobile ? "auto" : "120px",
               paddingTop: "0.25rem",
               position: "relative",
               display: "flex",
-              justifyContent: "center"
+              justifyContent: "center",
+              width: isMobile ? "100%" : "auto"
             }}>
               <p style={{
-                fontSize: "1rem",
+                fontSize: isMobile ? "0.9rem" : "1rem",
                 color: "#333",
                 fontFamily: "'Arial', sans-serif",
-                fontWeight: "600"
+                fontWeight: "600",
+                textAlign: isMobile ? "left" : "center"
               }}>
                 2021 - 2022
               </p>
             </div>
             <div style={{ flex: 1 }}>
               <h3 style={{
-                fontSize: "1.25rem",
+                fontSize: isMobile ? "1.1rem" : "1.25rem",
                 fontWeight: "600",
                 marginBottom: "0.5rem",
                 color: "#1a1a1a",
@@ -595,12 +664,12 @@ const Home = () => {
                 Web Development Trainee at StepUp IT Solutions
               </h3>
               <p style={{
-                fontSize: "0.95rem",
+                fontSize: isMobile ? "0.85rem" : "0.95rem",
                 color: "#666",
                 lineHeight: "1.8",
                 fontFamily: "'Arial', sans-serif",
                 marginBottom: "1rem",
-                textAlign: "justify"
+                textAlign: isMobile ? "left" : "justify"
               }}>
                 At StepUp IT Solutions, I developed a responsive web application that increased client engagement by 25%. I built user-friendly interfaces using HTML, CSS, JavaScript, and React.js, reducing feedback loops by 30%. I worked in a team of 4 developers to deliver milestones on schedule and conducted testing and debugging to achieve 99% cross-device compatibility, reducing technical issues by 15%.
               </p>
@@ -614,8 +683,7 @@ const Home = () => {
       <Projects />
 
       <Contact />
-
-<motion.footer 
+            <motion.footer 
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
@@ -623,7 +691,7 @@ const Home = () => {
       style={{
         backgroundColor: "#000000",
         color: "#ffffff",
-        padding: "3rem 10% 1.5rem",
+        padding: isMobile ? "2rem 1rem 1rem" : isTablet ? "2.5rem 2rem 1rem" : "3rem 10% 1.5rem",
         zIndex: 1
       }}
     >
@@ -631,14 +699,16 @@ const Home = () => {
         maxWidth: "1400px",
         margin: "0 auto",
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-        gap: "2rem",
+        gridTemplateColumns: isMobile ? "1fr" : "repeat(auto-fit, minmax(250px, 1fr))",
+        gap: isMobile ? "1.5rem" : "2rem",
         marginBottom: "2rem"
       }}>
         {/* Brand/Name */}
-        <motion.div variants={fadeInUp}>
+        <motion.div variants={fadeInUp} style={{
+          textAlign: isMobile ? "center" : "left"
+        }}>
           <h3 style={{
-            fontSize: "1.5rem",
+            fontSize: isMobile ? "1.3rem" : "1.5rem",
             fontWeight: "bold",
             marginBottom: "1rem",
             fontFamily: "Georgia, serif",
@@ -647,7 +717,7 @@ const Home = () => {
             Iqra Zulfiqar
           </h3>
           <p style={{
-            fontSize: "0.9rem",
+            fontSize: isMobile ? "0.85rem" : "0.9rem",
             color: "#cccccc",
             lineHeight: "1.6",
             fontFamily: "sans-serif"
@@ -657,9 +727,11 @@ const Home = () => {
         </motion.div>
 
         {/* Quick Links */}
-        <motion.div variants={fadeInUp}>
+        <motion.div variants={fadeInUp} style={{
+          textAlign: "center"
+        }}>
           <h4 style={{
-            fontSize: "1.1rem",
+            fontSize: isMobile ? "1rem" : "1.1rem",
             fontWeight: "600",
             marginBottom: "1rem",
             fontFamily: "sans-serif",
@@ -742,9 +814,11 @@ const Home = () => {
         </motion.div>
 
         {/* Contact Info */}
-        <motion.div variants={fadeInUp}>
+        <motion.div variants={fadeInUp} style={{
+          textAlign: isMobile ? "center" : "left"
+        }}>
           <h4 style={{
-            fontSize: "1.1rem",
+            fontSize: isMobile ? "1rem" : "1.1rem",
             fontWeight: "600",
             marginBottom: "1rem",
             fontFamily: "sans-serif"
@@ -752,7 +826,7 @@ const Home = () => {
             Contact
           </h4>
           <p style={{
-            fontSize: "0.9rem",
+            fontSize: isMobile ? "0.85rem" : "0.9rem",
             color: "#cccccc",
             lineHeight: "1.8",
             fontFamily: "sans-serif",
@@ -761,7 +835,7 @@ const Home = () => {
             Email: iqra07zulfiqar@gmail.com
           </p>
           <p style={{
-            fontSize: "0.9rem",
+            fontSize: isMobile ? "0.85rem" : "0.9rem",
             color: "#cccccc",
             lineHeight: "1.8",
             fontFamily: "sans-serif"
@@ -909,10 +983,11 @@ const Home = () => {
         }}
       >
         <p style={{
-          fontSize: "0.85rem",
+          fontSize: isMobile ? "0.75rem" : "0.85rem",
           color: "#999999",
           fontFamily: "sans-serif",
-          margin: 0
+          margin: 0,
+          textAlign: "center"
         }}>
           © {new Date().getFullYear()} Iqra Zulfiqar. All rights reserved.
         </p>

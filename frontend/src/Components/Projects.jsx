@@ -12,11 +12,31 @@ import cover1 from '../assets/cover1.png'
 import cover2 from '../assets/cover2.png'
 import cover3 from '../assets/cover3.png'
 import cover4 from '../assets/cover4.png'
+import cover5 from '../assets/cover5.png'
+
+// Import focus area icons
+import apiIcon from '../assets/api.png'
+import featuresIcon from '../assets/features.png'
+import dashboardIcon from '../assets/dashboard.png'
+import engineeringIcon from '../assets/engineering.png'
+import scalableIcon from '../assets/scalable.png'
 
 const Projects = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [hoveredCard, setHoveredCard] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isTablet, setIsTablet] = useState(window.innerWidth >= 768 && window.innerWidth < 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsTablet(window.innerWidth >= 768 && window.innerWidth < 1024);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const projects = [
     {
@@ -49,7 +69,7 @@ const Projects = () => {
       url: "https://ignitebyembodied.com/",
       tags: ["AI Platform", "Interactive"],
       year: "2025",
-      coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=400&fit=crop"
+      coverImage: cover5
     },
     {
       title: "Little Games",
@@ -70,27 +90,27 @@ const Projects = () => {
 
   const focusAreas = [
     { 
-      icon: "🔌", 
+      icon: apiIcon, 
       title: "AI API Integration",
       text: "LLMs, vision, speech models" 
     },
     { 
-      icon: "⚡", 
+      icon: featuresIcon, 
       title: "Real-time AI Features",
       text: "Inside web applications" 
     },
     { 
-      icon: "📊", 
+      icon: dashboardIcon, 
       title: "Intelligent Dashboards",
       text: "Data-driven interfaces" 
     },
     { 
-      icon: "🎯", 
+      icon: engineeringIcon, 
       title: "Prompt Engineering",
       text: "AI workflow design" 
     },
     { 
-      icon: "🚀", 
+      icon: scalableIcon, 
       title: "Scalable Backends",
       text: "For AI-powered systems" 
     }
@@ -129,7 +149,7 @@ const Projects = () => {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
@@ -137,7 +157,7 @@ const Projects = () => {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
-      transition: { duration: 0.8 }
+      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
@@ -146,7 +166,8 @@ const Projects = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15
+        staggerChildren: 0.15,
+        delayChildren: 0.1
       }
     }
   };
@@ -156,18 +177,25 @@ const Projects = () => {
     visible: { 
       opacity: 1, 
       scale: 1,
-      transition: { duration: 0.5 }
+      transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
     }
   };
 
   return (
-    <section id="projects" style={{
-      position: "relative",
-      minHeight: "100vh",
-      padding: "5rem 8%",
-      backgroundColor: "#ffffff",
-      overflow: "hidden"
-    }}>
+    <motion.section 
+      id="projects"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={fadeIn}
+      style={{
+        position: "relative",
+        minHeight: "auto",
+        padding: isMobile ? "3rem 1rem" : isTablet ? "4rem 2rem" : "5rem 8%",
+        backgroundColor: "#ffffff",
+        overflow: "hidden"
+      }}
+    >
       <style>
         {`
           @keyframes fadeInUp {
@@ -216,6 +244,15 @@ const Projects = () => {
               opacity: 0.3;
             }
           }
+
+          @keyframes shine {
+            0% {
+              left: -100%;
+            }
+            100% {
+              left: 200%;
+            }
+          }
         `}
       </style>
 
@@ -229,8 +266,9 @@ const Projects = () => {
         <motion.div 
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.2 }}
           variants={fadeIn}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           style={{
             marginBottom: "5rem",
             position: "relative",
@@ -295,7 +333,7 @@ const Projects = () => {
               }}
             >
               <h2 style={{
-                fontSize: "3rem",
+                fontSize: isMobile ? "1.8rem" : isTablet ? "2.2rem" : "3rem",
                 fontWeight: "700",
                 color: "#000",
                 margin: "0 0 1rem 0",
@@ -333,14 +371,14 @@ const Projects = () => {
                   transition: currentSlide === focusAreas.length || currentSlide === 0 
                     ? "none" 
                     : "transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                  transform: `translateX(-${(currentSlide + focusAreas.length) * (100 / 3)}%)`
+                  transform: `translateX(-${(currentSlide + focusAreas.length) * (isMobile ? 100 : 100 / 3)}%)`
                 }}>
                   {duplicatedCards.map((item, index) => (
                     <div
                       key={index}
                       style={{
-                        minWidth: "33.333%",
-                        padding: "0 10px"
+                        minWidth: isMobile ? "100%" : "33.333%",
+                        padding: isMobile ? "0 5px" : "0 10px"
                       }}
                     >
                       <div
@@ -361,6 +399,22 @@ const Projects = () => {
                           height: "100%"
                         }}
                       >
+                        {/* Shine Effect */}
+                        {hoveredCard === index && (
+                          <div style={{
+                            position: "absolute",
+                            top: 0,
+                            left: "-100%",
+                            width: "50%",
+                            height: "100%",
+                            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)",
+                            transform: "skewX(-20deg)",
+                            animation: "shine 0.8s ease-in-out",
+                            zIndex: 2,
+                            pointerEvents: "none"
+                          }} />
+                        )}
+
                         <div style={{
                           position: "absolute",
                           top: 0,
@@ -375,13 +429,24 @@ const Projects = () => {
 
                         <div style={{ position: "relative", zIndex: 1 }}>
                           <div style={{
-                            fontSize: "3rem",
-                            marginBottom: "1.25rem",
-                            transform: "scale(1.1) rotate(5deg)",
+                            width: "60px",
+                            height: "60px",
+                            margin: "0 auto 1.25rem",
                             transition: "transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                            display: "inline-block"
+                            transform: hoveredCard === index ? "scale(1.1) rotate(5deg)" : "scale(1)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center"
                           }}>
-                            {item.icon}
+                            <img 
+                              src={item.icon} 
+                              alt={item.title}
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "contain"
+                              }}
+                            />
                           </div>
 
                           <h3 style={{
@@ -424,11 +489,11 @@ const Projects = () => {
                 onClick={prevSlide}
                 style={{
                   position: "absolute",
-                  left: "-60px",
+                  left: isMobile ? "10px" : "-60px",
                   top: "50%",
                   transform: "translateY(-50%)",
-                  width: "45px",
-                  height: "45px",
+                  width: isMobile ? "40px" : "45px",
+                  height: isMobile ? "40px" : "45px",
                   borderRadius: "50%",
                   backgroundColor: "#000",
                   color: "#fff",
@@ -458,11 +523,11 @@ const Projects = () => {
                 onClick={nextSlide}
                 style={{
                   position: "absolute",
-                  right: "-60px",
+                  right: isMobile ? "10px" : "-60px",
                   top: "50%",
                   transform: "translateY(-50%)",
-                  width: "45px",
-                  height: "45px",
+                  width: isMobile ? "40px" : "45px",
+                  height: isMobile ? "40px" : "45px",
                   borderRadius: "50%",
                   backgroundColor: "#000",
                   color: "#fff",
@@ -521,13 +586,14 @@ const Projects = () => {
             background: "linear-gradient(to right, transparent, #e0e0e0, transparent)"
           }} />
         </motion.div>
-
         {/* Portfolio Header */}
         <motion.div 
+          id="portfolio-heading"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: true, amount: 0.3 }}
           variants={fadeInUp}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           style={{
             textAlign: "center",
             marginBottom: "4rem"
@@ -572,7 +638,7 @@ const Projects = () => {
           <div style={{ marginBottom: "2rem" }}></div>
           
           <h2 style={{
-            fontSize: "3rem",
+            fontSize: isMobile ? "1.5rem" : isTablet ? "2rem" : "3rem",
             fontWeight: "300",
             color: "#000",
             margin: "0 0 1rem 0",
@@ -588,12 +654,13 @@ const Projects = () => {
         <motion.div 
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.2 }}
           variants={staggerContainer}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "2rem",
+          gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "repeat(3, 1fr)",
+          gap: isMobile ? "1.5rem" : "2rem",
             marginBottom: "2rem"
           }}
         >
@@ -619,8 +686,23 @@ const Projects = () => {
                 border: "1px solid #e5e5e5",
                 transition: "transform 0.4s ease, box-shadow 0.4s ease",
                 transform: hoveredIndex === index ? "translateY(-5px)" : "translateY(0)",
-                boxShadow: hoveredIndex === index ? "0 20px 40px rgba(0,0,0,0.1)" : "0 5px 15px rgba(0,0,0,0.05)"
+                boxShadow: hoveredIndex === index ? "0 20px 40px rgba(0,0,0,0.1)" : "0 5px 15px rgba(0,0,0,0.05)",
+                position: "relative"
               }}>
+                {hoveredIndex === index && (
+                  <div style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "-100%",
+                    width: "50%",
+                    height: "100%",
+                    background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)",
+                    transform: "skewX(-20deg)",
+                    animation: "shine 0.8s ease-in-out",
+                    zIndex: 2,
+                    pointerEvents: "none"
+                  }} />
+                )}
                 {project.coverImage ? (
                   <img 
                     src={project.coverImage}
@@ -735,13 +817,14 @@ const Projects = () => {
         <motion.div 
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.2 }}
           variants={staggerContainer}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           style={{
-            display: "flex",
-            justifyContent: "center",
-            gap: "2rem",
-            marginTop: "2rem"
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr" : isTablet ? "repeat(2, 1fr)" : "repeat(6, 1fr)",
+            gap: isMobile ? "1.5rem" : "2rem",
+            marginTop: "6rem"
           }}
         >
           {projects.slice(3, 5).map((project, index) => (
@@ -754,7 +837,7 @@ const Projects = () => {
               style={{
                 position: "relative",
                 cursor: "pointer",
-                width: "calc(33.333% - 1.33rem)"
+                gridColumn: !isMobile && !isTablet ? (index === 0 ? "2 / span 2" : "4 / span 2") : "auto"
               }}
             >
               <div style={{
@@ -767,8 +850,23 @@ const Projects = () => {
                 border: "1px solid #e5e5e5",
                 transition: "transform 0.4s ease, box-shadow 0.4s ease",
                 transform: hoveredIndex === index + 3 ? "translateY(-5px)" : "translateY(0)",
-                boxShadow: hoveredIndex === index + 3 ? "0 20px 40px rgba(0,0,0,0.1)" : "0 5px 15px rgba(0,0,0,0.05)"
+                boxShadow: hoveredIndex === index + 3 ? "0 20px 40px rgba(0,0,0,0.1)" : "0 5px 15px rgba(0,0,0,0.05)",
+                position: "relative"
               }}>
+                {hoveredIndex === index + 3 && (
+                  <div style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "-100%",
+                    width: "50%",
+                    height: "100%",
+                    background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)",
+                    transform: "skewX(-20deg)",
+                    animation: "shine 0.8s ease-in-out",
+                    zIndex: 2,
+                    pointerEvents: "none"
+                  }} />
+                )}
                 {project.coverImage ? (
                   <img 
                     src={project.coverImage}
@@ -879,7 +977,7 @@ const Projects = () => {
           ))}
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   )
 }
 
