@@ -163,7 +163,7 @@ const About = () => {
                   color: "#000000",
                   marginBottom: "0.5rem",
                   fontFamily: "sans-serif"
-                }}>2+</h3>
+                }}>2</h3>
                 <p style={{
                   fontSize: "0.9rem",
                   color: "#555555",
