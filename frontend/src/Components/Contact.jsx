@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Award } from 'lucide-react';
@@ -83,14 +84,6 @@ const Contact = () => {
     }
   };
 
-  const fadeIn = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
-    }
-  };
-
   const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
@@ -136,13 +129,10 @@ const Contact = () => {
         theme="light"
       />
 
-      <motion.section 
+      {/* FIX: Converted motion.section to plain section — background stays fully visible,
+          only child elements animate in to prevent the black shadow on scroll. */}
+      <section 
         id="contact"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: "relative",
           minHeight: "auto",
@@ -153,13 +143,11 @@ const Contact = () => {
         }}
       >
         {/* Benefits Section */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div>
           <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             style={{
               maxWidth: "700px",
@@ -207,6 +195,9 @@ const Contact = () => {
           </motion.div>
 
           <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
             variants={staggerContainer}
             style={{
               maxWidth: "700px",
@@ -344,17 +335,15 @@ const Contact = () => {
               </div>
             </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* Contact Section */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div>
           <motion.h2 
             id="contact-heading"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             style={{
               fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
@@ -422,6 +411,9 @@ const Contact = () => {
           `}</style>
           
           <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
             variants={fadeInUp}
             style={{
               maxWidth: "650px",
@@ -621,8 +613,8 @@ const Contact = () => {
               </motion.div>
             </form>
           </motion.div>
-        </motion.div>
-      </motion.section>
+        </div>
+      </section>
     </>
   );
 };

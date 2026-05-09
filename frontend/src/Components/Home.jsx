@@ -127,7 +127,7 @@ const Home = () => {
 
   return (
     <div>
-      {/* Hero Section */}
+      {/* Hero Section — kept as-is since it intentionally fades over a video background */}
       <motion.section
         id="home"
         initial="hidden"
@@ -280,14 +280,10 @@ const Home = () => {
       
       <About />
 
-      {/* Skills Section */}
-      <motion.section 
+      {/* Skills Section
+          FIX: Removed variants={fadeIn} from section wrapper — only children animate */}
+      <section 
         id="skills"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: "relative",
           minHeight: "auto",
@@ -298,6 +294,9 @@ const Home = () => {
       >
         {/* Title */}
         <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
           variants={fadeInUp}
           style={{ textAlign: "center", marginBottom: "1.5rem" }}
         >
@@ -330,6 +329,9 @@ const Home = () => {
 
         {/* Skills Grid - Responsive */}
         <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
           variants={staggerContainer}
           style={{
             display: "grid",
@@ -396,16 +398,12 @@ const Home = () => {
             </motion.div>
           ))}
         </motion.div>
-      </motion.section>
+      </section>
 
-      {/* Experience Section */}
-      <motion.section 
+      {/* Experience Section
+          FIX: Removed variants={fadeIn} from section wrapper — only children animate */}
+      <section 
         id="experience"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={fadeIn}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         style={{
           position: "relative",
           minHeight: "auto",
@@ -415,6 +413,9 @@ const Home = () => {
         }}
       >
         <motion.h2 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
           variants={fadeInUp}
           style={{
             fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
@@ -444,6 +445,9 @@ const Home = () => {
         <div style={{ marginBottom: "2rem" }}></div>
         
         <motion.h2 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
           variants={fadeInUp}
           style={{
             fontSize: isMobile ? "1.5rem" : isTablet ? "1.8rem" : "2.5rem",
@@ -465,6 +469,9 @@ const Home = () => {
         }}>
           {/* MERN Stack Developer */}
           <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             style={{
               display: "flex",
@@ -529,6 +536,9 @@ const Home = () => {
 
           {/* Assistant Manager Processing */}
           <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             style={{
               display: "flex",
@@ -593,6 +603,9 @@ const Home = () => {
 
           {/* Web Development Trainee */}
           <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             style={{
               display: "flex",
@@ -643,7 +656,7 @@ const Home = () => {
             </div>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
       
       <Services />
 

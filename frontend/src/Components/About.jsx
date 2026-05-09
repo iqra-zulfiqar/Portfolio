@@ -63,12 +63,10 @@ const About = () => {
   };
 
   return (
-    <motion.section 
+    // FIX: Removed initial="hidden" / variants={fadeIn} from the section wrapper.
+    // The section itself stays fully visible; only child elements animate in.
+    <section 
       id="about"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       style={{
         position: "relative",
         minHeight: "auto",
@@ -87,6 +85,9 @@ const About = () => {
         {/* About Me */}
         <div>
           <motion.h2 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInUp}
             style={{
               fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
@@ -122,6 +123,9 @@ const About = () => {
           }}>
             {/* Left side - Paragraph */}
             <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
               variants={fadeInLeft}
               style={{ flex: isMobile ? "1 1 100%" : "1 1 400px", width: isMobile ? "100%" : "auto" }}
             >
@@ -139,6 +143,9 @@ const About = () => {
 
             {/* Right side - Stats */}
             <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
               variants={staggerContainer}
               style={{
                 flex: isMobile ? "1 1 100%" : "1 1 300px",
@@ -211,24 +218,28 @@ const About = () => {
         </div>
 
         {/* Education */}
-        <motion.div 
+        <div 
           id="education"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={fadeInUp}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
-          <h2 style={{
-            fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
-            fontWeight: "bold",
-            marginBottom: "2rem",
-            color: "#333",
-            fontFamily: "sans-serif"
-          }}>
+          <motion.h2
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeInUp}
+            style={{
+              fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
+              fontWeight: "bold",
+              marginBottom: "2rem",
+              color: "#333",
+              fontFamily: "sans-serif"
+            }}
+          >
             Education
-          </h2>
+          </motion.h2>
           <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
             variants={fadeInRight}
             style={{
               borderLeft: "4px solid #000000",
@@ -273,9 +284,9 @@ const About = () => {
               Web & Android Development • Data Structures & Algorithms • Database Systems
             </p>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   )
 }
 

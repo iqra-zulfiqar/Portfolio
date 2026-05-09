@@ -153,14 +153,6 @@ const Projects = () => {
     }
   };
 
-  const fadeIn = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
-    }
-  };
-
   const staggerContainer = {
     hidden: { opacity: 0 },
     visible: {
@@ -182,12 +174,10 @@ const Projects = () => {
   };
 
   return (
-    <motion.section 
+    // FIX: Converted motion.section to plain section — section background stays visible,
+    // only child elements animate in to prevent the black shadow on scroll.
+    <section 
       id="projects"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={fadeIn}
       style={{
         position: "relative",
         minHeight: "auto",
@@ -264,10 +254,9 @@ const Projects = () => {
       }}>
         {/* AI-Powered Web Solutions Section */}
         <motion.div 
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          variants={fadeIn}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           style={{
             marginBottom: "5rem",
@@ -278,6 +267,9 @@ const Projects = () => {
           
           {/* Floating AI Icons - Clean Layout Above Section */}
           <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
             variants={staggerContainer}
             style={{
               position: "absolute",
@@ -327,6 +319,9 @@ const Projects = () => {
           }}>
             {/* Main Heading */}
             <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
               variants={fadeInUp}
               style={{
                 marginBottom: "3rem"
@@ -355,6 +350,9 @@ const Projects = () => {
 
             {/* Focus Areas Cards - Carousel */}
             <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
               variants={fadeInUp}
               style={{
                 position: "relative",
@@ -586,6 +584,7 @@ const Projects = () => {
             background: "linear-gradient(to right, transparent, #e0e0e0, transparent)"
           }} />
         </motion.div>
+
         {/* Portfolio Header */}
         <motion.div 
           id="portfolio-heading"
@@ -977,7 +976,7 @@ const Projects = () => {
           ))}
         </motion.div>
       </div>
-    </motion.section>
+    </section>
   )
 }
 

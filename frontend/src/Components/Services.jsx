@@ -177,12 +177,10 @@ const Services = () => {
   };
 
   return (
-    <motion.section 
+    // FIX: Removed initial/animate opacity from section wrapper.
+    // Section background is always visible; only heading animates in.
+    <section 
       id="services"
-      initial={{ opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       style={{
         position: "relative",
         minHeight: "auto",
@@ -224,43 +222,53 @@ const Services = () => {
         pointerEvents: "none"
       }} />
 
-      {/* Heading at the top */}
-      <div style={{
-        position: isMobile ? "relative" : "absolute",
-        top: isMobile ? "auto" : "2rem",
-        left: isMobile ? "auto" : "50%",
-        transform: isMobile ? "none" : "translateX(-50%)",
-        textAlign: "center",
-        zIndex: 5,
-        width: "100%",
-        marginBottom: isMobile ? "2.5rem" : "0",
-        padding: isMobile ? "0 1rem" : "0"
-      }}>
-        <h2 style={{
-          fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
-          fontWeight: "bold",
-          marginBottom: isMobile ? "1.5rem" : "1rem",
-          color: "#333",
-          fontFamily: "sans-serif",
+      {/* Heading at the top
+          The outer div handles positioning only (no transform conflicts).
+          The inner motion.div handles the fade/slide animation. */}
+      <div
+        style={{
+          position: isMobile ? "relative" : "absolute",
+          top: isMobile ? "auto" : "2rem",
+          left: isMobile ? "auto" : "0",
+          right: isMobile ? "auto" : "0",
           textAlign: "center",
-          position: "relative",
-          paddingBottom: "1rem"
-        }}>
-          Services
-          <span style={{
-            position: "absolute",
-            bottom: "0",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "150px",
-            height: "4px",
-            background: "linear-gradient(90deg, #000000 0%, #ffffff 50%, #000000 100%)",
-            borderRadius: "2px",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.3)"
-          }}></span>
-        </h2>
+          zIndex: 5,
+          width: "100%",
+          marginBottom: isMobile ? "2.5rem" : "0",
+          padding: isMobile ? "0 1rem" : "0"
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <h2 style={{
+            fontSize: isMobile ? "1.8rem" : isTablet ? "2rem" : "2.5rem",
+            fontWeight: "bold",
+            marginBottom: isMobile ? "1.5rem" : "1rem",
+            color: "#333",
+            fontFamily: "sans-serif",
+            textAlign: "center",
+            position: "relative",
+            paddingBottom: "1rem"
+          }}>
+            Services
+            <span style={{
+              position: "absolute",
+              bottom: "0",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "150px",
+              height: "4px",
+              background: "linear-gradient(90deg, #000000 0%, #ffffff 50%, #000000 100%)",
+              borderRadius: "2px",
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.3)"
+            }}></span>
+          </h2>
 
-        <div style={{ marginBottom: "2rem" }}></div>
+          <div style={{ marginBottom: "2rem" }}></div>
           <h4 style={{
             fontSize: isMobile ? "1.5rem" : isTablet ? "2rem" : "3rem",
             fontWeight: "300",
@@ -272,6 +280,7 @@ const Services = () => {
           }}>
             Creating Impact Through Expertise
           </h4>
+        </motion.div>
       </div>
 
       <div style={{
@@ -341,7 +350,7 @@ const Services = () => {
           ))
         )}
       </div>
-    </motion.section>
+    </section>
   );
 };
 
