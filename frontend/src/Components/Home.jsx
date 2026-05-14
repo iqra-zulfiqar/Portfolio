@@ -211,7 +211,7 @@ const Home = () => {
               color: "white"
             }}
           >
-            Full Stack Developer
+            MERN Stack Developer
           </motion.h2>
           <motion.div 
             variants={fadeInUp}
