@@ -83,7 +83,15 @@ const Navbar = () => {
             </div>
           </div>
 
-    
+          {/* Email - Desktop */}
+          <div className="hidden md:block flex-shrink-0">
+            <a 
+              href="mailto:iqra07zulfiqar@gmail.com" 
+              className="hover:text-gray-300 transition-colors border-b-2 border-white pb-1"
+            >
+              iqra07zulfiqar@gmail.com
+            </a>
+          </div>
           
           {/* Mobile menu button */}
           <div className="md:hidden">
@@ -145,7 +153,12 @@ const Navbar = () => {
             >
               Contact
             </a>
-          
+            <a 
+              href="mailto:iqra07zulfiqar@gmail.com" 
+              className="block px-3 py-2 border-b-2 border-white pb-2 inline-block"
+            >
+              iqra07zulfiqar@gmail.com
+            </a>
           </div>
         </div>
       )}
